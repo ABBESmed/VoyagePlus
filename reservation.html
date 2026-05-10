@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation - VoyagePlus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- header -->
+    <header class="header">
+        <h1 class="logo">VoyagePlus</h1>
+
+        <nav class="nav">
+            <a href="index.html">Accueil</a>
+            <a href="voyage.html">Voyage</a>
+            <a href="activites.html">Activités</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="buttons">
+            <a href="connexion.html" class="btn-login">Connexion</a>
+            <a href="inscription.html" class="btn-register">Inscription</a>
+        </div>
+    </header>
+
+    <!-- Titre de page -->
+    <section class="page-title">
+        <h2>Réserver un voyage</h2>
+        <p>Remplissez le formulaire pour préparer votre prochaine aventure.</p>
+    </section>
+
+    <!-- Formulaire de réservation -->
+    <section class="reservation-page">
+        <form class="reservation-form">
+
+            <label for="nom">Nom complet</label>
+            <input type="text" id="nom" placeholder="Votre nom complet">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Votre email">
+
+            <label for="destination">Destination</label>
+            <select id="destination">
+                <option value="">Choisir une destination</option>
+                <option value="paris">Paris</option>
+                <option value="marrakech">Marrakech</option>
+                <option value="bali">Bali</option>
+                <option value="rome">Rome</option>
+            </select>
+
+            <label for="activite">Activité optionnelle</label>
+            <select id="activite">
+                <option value="">Aucune activité</option>
+                <option value="randonnee">Randonnée</option>
+                <option value="plongee">Plongée</option>
+                <option value="safari">Safari</option>
+                <option value="visite-guidee">Visite guidée</option>
+            </select>
+
+            <label for="date-depart">Date de départ</label>
+            <input type="date" id="date-depart">
+
+            <label for="date-retour">Date de retour</label>
+            <input type="date" id="date-retour">
+
+            <label for="personnes">Nombre de personnes</label>
+            <input type="number" id="personnes" placeholder="Ex: 2" min="1">
+
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Votre message ou demande spéciale"></textarea>
+
+            <button type="submit">Envoyer la réservation</button>
+
+        </form>
+    </section>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h2>VoyagePlus</h2>
+            <p>Découvrez le monde avec nous et réservez vos plus beaux voyages.</p>
+
+            <div class="footer-links">
+                <a href="index.html">Accueil</a>
+                <a href="voyage.html">Voyage</a>
+                <a href="activites.html">Activités</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <p class="copyright">&copy; 2026 VoyagePlus. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

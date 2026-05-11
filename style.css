@@ -17,6 +17,15 @@ header{
     align-items: center;
     border-bottom: 1px solid #e5e5e5;
 }
+
+.burger{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #0077b6;
+    cursor: pointer;
+}
 .logo{
     font-size: 28px;
     color: #0077b6;
@@ -534,6 +543,23 @@ header{
     .footer-links a{
         display: block;
         margin: 10px 0;
+    }
+
+    .burger{
+        display: block;
+    }
+
+    .nav,
+    .buttons{
+        display: none;
+    }
+
+    .nav.active,
+    .buttons.active{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
     }
 }
 

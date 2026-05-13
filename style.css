@@ -522,30 +522,6 @@ header{
     background: #003f88;
 }
 
-/*Dark Mode Styles*/
-
-.theme-toggle {
-    position: fixed;
-    right: 25px;
-    bottom: 80px;
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 50%;
-    background: #0056b3;
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
-    z-index: 9999;
-}
-
-.theme-toggle:hover {
-    background: #003f88;
-}
-
-
-
-
 
 /* Responsive Design using media queries*/
 

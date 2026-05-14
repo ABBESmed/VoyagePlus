@@ -29,20 +29,20 @@
     <!--Inscription Section-->
 
     <section class="auth-page">
-        <form class="auth-form">
+        <form class="auth-form" action="../BACK-END/register.php" method="post">
             <h2>Inscription</h2>
             <p>Créez votre compte VoyagePlus.</p>
 
             <label for="nom">Nom complet</label>
-            <input type="text" id="nom" placeholder="Votre nom complet">
+            <input type="text" id="nom" name="fullname" placeholder="Votre nom complet">
 
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Votre email">
+            <input type="email" id="email" name="email" placeholder="Votre email">
 
             <label for="password">Mot de passe</label>
 
             <div class="password-box">
-                <input type="password" id="password" placeholder="Votre mot de passe">
+                <input type="password" id="password" name="password" placeholder="Votre mot de passe">
                 <button type="button" id="toggle-password" class="eye-btn">👁️</button>
             </div>
 
@@ -50,7 +50,7 @@
             <label for="confirm-password">Confirmer le mot de passe</label>
 
             <div class="password-box">
-                <input type="password" id="confirm-password" placeholder="Confirmez votre mot de passe">
+                <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirmez votre mot de passe">
                 <button type="button" id="toggle-confirm-password" class="eye-btn">👁️</button>
             </div>
 

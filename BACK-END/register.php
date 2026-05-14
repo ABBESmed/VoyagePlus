@@ -23,5 +23,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt->execute([$fullname, $email, $hashed_password]); // This runs the SQL and fills the ?.
 
-    echo "Account created successfully.";
+    header("Location: ../FRONT-END/connexion.html");
+    exit;
 }

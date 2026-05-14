@@ -522,6 +522,21 @@ header{
     background: #003f88;
 }
 
+/* Profile circle login */
+.buttons .profile-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #0077b6;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    font-size: 20px;
+}
 
 /* Responsive Design using media queries*/
 

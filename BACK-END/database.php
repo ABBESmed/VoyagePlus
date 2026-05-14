@@ -1,6 +1,5 @@
-// Connect PHP to MySQL database
-
 <?php
+// Connect PHP to MySQL database
 
 // Declare Variables.
 

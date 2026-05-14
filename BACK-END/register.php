@@ -3,6 +3,11 @@
 require_once "database.php";
 
 if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    echo "Form sent successfully";
+    exit;
+
+
     $fullname = $_POST["fullname"];
     $email = $_POST["email"];
     $password = $_POST["password"];

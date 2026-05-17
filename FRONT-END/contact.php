@@ -52,15 +52,15 @@ session_start();
     </section>
 
     <section class="contact-page">
-        <form class="contact-form">
+        <form class="contact-form" action="../BACK-END/contact_process.php" method="POST">
             <label for="nom">Nom</label>
-            <input type="text" id="nom" placeholder="Votre nom">
+            <input type="text" id="nom" name="name" placeholder="Votre nom">
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Votre email">
+            <input type="email" id="email" name="email" placeholder="Votre email">
             <label for="sujet">Sujet</label>
-            <input type="text" id="sujet" placeholder="Sujet">
+            <input type="text" id="sujet" name="subject" placeholder="Sujet">
             <label for="message">Message</label>
-            <textarea id="message" placeholder="Votre message"></textarea>
+            <textarea id="message" name="message" placeholder="Votre message"></textarea>
             <button type="submit">Envoyer</button>
         </form>
     </section>

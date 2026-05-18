@@ -56,13 +56,24 @@ session_start();
         <form class="reservation-form" action="../BACK-END/reservation_process.php" method="POST">
 
             <label for="nom">Nom complet</label>
-            <input type="text" id="nom" name="fullname" placeholder="Votre nom complet">
-
+            <input 
+                type="text" 
+                id="nom" 
+                name="fullname" 
+                placeholder="Votre nom complet"
+                value="<?php echo isset($_SESSION['fullname']) ? $_SESSION['fullname'] : ''; ?>"
+            >
             <label for="birth-date">Date de naissance</label>
             <input type="date" id="birth-date" name="birth_date">
 
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Votre email">
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="Votre email"
+                value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>"
+            >
 
             <label for="destination">Destination</label>
             <select id="destination" name="destination">

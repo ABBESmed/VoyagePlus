@@ -17,10 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($user && password_verify($password, $user["password"])) {
     $_SESSION["user_id"] = $user["id"];
     $_SESSION["fullname"] = $user["fullname"];
+    $_SESSION["email"] = $user["email"];
 
-        header("Location: ../FRONT-END/index.php");
-        exit;
-    } else {
+    header("Location: ../FRONT-END/index.php");
+    exit;
+    }else {
         echo "Email or password incorrect.";
     }
 }

@@ -56,28 +56,28 @@ session_start();
                 <h3>Paris</h3>
                 <p>Découvrez la ville lumière, ses monuments et sa gastronomie.</p>
                 <p class="price">À partir de 299€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
             <div class="card">
                 <img src="images/marrakech.jpg" alt="Marrakech">
                 <h3>Marrakech</h3>
                 <p>Profitez du soleil, des souks et d’une culture unique.</p>
                 <p class="price">À partir de 399€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
             <div class="card">
                 <img src="images/bali.jpg" alt="Bali">
                 <h3>Bali</h3>
                 <p>Explorez les plages, les rizières et les paysages tropicaux.</p>
                 <p class="price">À partir de 899€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
             <div class="card">
                 <img src="images/rome.jpg" alt="Rome">
                 <h3>Rome</h3>
                 <p>Visitez les monuments historiques et profitez de la cuisine italienne.</p>
                 <p class="price">À partir de 349€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
         </div>
     </section>

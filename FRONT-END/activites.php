@@ -56,28 +56,28 @@ session_start();
                 <h3>Randonnée</h3>
                 <p>Explorez des montagnes, des forêts et des paysages naturels magnifiques.</p>
                 <p class="price">À partir de 49€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
             <div class="card">
                 <img src="images/plongee.jpg" alt="Plongée">
                 <h3>Plongée</h3>
                 <p>Découvrez les fonds marins et profitez d’une aventure sous-marine.</p>
                 <p class="price">À partir de 79€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
             <div class="card">
                 <img src="images/safari.jpg" alt="Safari">
                 <h3>Safari</h3>
                 <p>Vivez une expérience unique au cœur de la nature et observez les animaux.</p>
                 <p class="price">À partir de 149€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
             <div class="card">
                 <img src="images/visite.jpg" alt="Visite guidée">
                 <h3>Visite guidée</h3>
                 <p>Découvrez les villes, les monuments et la culture locale avec un guide.</p>
                 <p class="price">À partir de 39€</p>
-                <a href="reservation.html">Réserver</a>
+                <a href="reservation.php">Réserver</a>
             </div>
         </div>
     </section>

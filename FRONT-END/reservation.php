@@ -1,3 +1,9 @@
+<?php
+session_start();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,8 +26,20 @@
         </nav>
 
         <div class="buttons" id="buttons">
-            <a href="connexion.html" class="btn-login">Connexion</a>
-            <a href="inscription.html" class="btn-register">Inscription</a>
+            <?php if (isset($_SESSION["fullname"])): ?>
+
+                <div class="profile-circle">
+                    <?php echo strtoupper($_SESSION["fullname"][0]); ?>
+                </div>
+
+                <a href="../BACK-END/logout.php" class="btn-login">Déconnexion</a>
+
+            <?php else: ?>
+
+                <a href="connexion.html" class="btn-login">Connexion</a>
+                <a href="inscription.html" class="btn-register">Inscription</a>
+
+            <?php endif; ?>
         </div>
     </header>
 
@@ -35,16 +53,16 @@
 
     <!-- Formulaire de réservation -->
     <section class="reservation-page">
-        <form class="reservation-form">
+        <form class="reservation-form" action="../BACK-END/reservation_process.php" method="POST">
 
             <label for="nom">Nom complet</label>
-            <input type="text" id="nom" placeholder="Votre nom complet">
+            <input type="text" id="nom" name="fullname" placeholder="Votre nom complet">
 
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Votre email">
+            <input type="email" id="email" name="email" placeholder="Votre email">
 
             <label for="destination">Destination</label>
-            <select id="destination">
+            <select id="destination" name="destination">
                 <option value="">Choisir une destination</option>
                 <option value="paris">Paris</option>
                 <option value="marrakech">Marrakech</option>
@@ -53,7 +71,7 @@
             </select>
 
             <label for="activite">Activité optionnelle</label>
-            <select id="activite">
+            <select id="activite" name="activity">
                 <option value="">Aucune activité</option>
                 <option value="randonnee">Randonnée</option>
                 <option value="plongee">Plongée</option>
@@ -62,16 +80,16 @@
             </select>
 
             <label for="date-depart">Date de départ</label>
-            <input type="date" id="date-depart">
+            <input type="date" id="date-depart" name="departure_date">
 
             <label for="date-retour">Date de retour</label>
-            <input type="date" id="date-retour">
+            <input type="date" id="date-retour" name="return_date">
 
             <label for="personnes">Nombre de personnes</label>
-            <input type="number" id="personnes" placeholder="Ex: 2" min="1">
+            <input type="number" id="personnes" name="persons" placeholder="Ex: 2" min="1">
 
             <label for="message">Message</label>
-            <textarea id="message" placeholder="Votre message ou demande spéciale"></textarea>
+            <textarea id="message" name="message" placeholder="Votre message ou demande spéciale"></textarea>
 
             <button type="submit">Envoyer la réservation</button>
 

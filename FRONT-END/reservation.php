@@ -111,6 +111,8 @@ session_start();
             <label for="personnes">Nombre de personnes</label>
             <input type="number" id="personnes" name="persons" placeholder="Ex: 2" min="1">
 
+            <div id="passengers-container"></div>
+
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="Votre message ou demande spéciale"></textarea>
 

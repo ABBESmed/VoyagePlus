@@ -4,23 +4,26 @@ session_start();
 
 require_once "database.php";
 
+if (!isset($_SESSION["user_id"])) {
+    header("Location: ../FRONT-END/connexion.html");
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
+    $user_id = $_SESSION["user_id"];
     $subject = $_POST["subject"];
     $message = $_POST["message"];
 
-    $user_id = null;
-
-    if (isset($_SESSION["user_id"])) {
-        $user_id = $_SESSION["user_id"];
-    }
-
-    $sql = "INSERT INTO contacts (name, email, subject, message, user_id) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO contacts (user_id, subject, message)
+            VALUES (?, ?, ?)";
 
     $stmt = $pdo->prepare($sql);
 
-    $stmt->execute([$name, $email, $subject, $message, $user_id]);
+    $stmt->execute([
+        $user_id,
+        $subject,
+        $message
+    ]);
 
     header("Location: ../FRONT-END/contact.php");
     exit;

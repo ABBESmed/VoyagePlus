@@ -53,22 +53,7 @@ session_start();
 
     <section class="contact-page">
         <form class="contact-form" action="../BACK-END/contact_process.php" method="POST">
-            <label for="nom">Nom</label>
-            <input 
-                type="text" 
-                id="nom" 
-                name="name" 
-                placeholder="Votre nom"
-                value="<?php echo isset($_SESSION['fullname']) ? $_SESSION['fullname'] : ''; ?>"
-            >
-            <label for="email">Email</label>
-            <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                placeholder="Votre email"
-                value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>"
-            >
+            
             <label for="sujet">Sujet</label>
             <input type="text" id="sujet" name="subject" placeholder="Sujet">
             <label for="message">Message</label>

@@ -538,6 +538,34 @@ header{
     font-size: 20px;
 }
 
+
+.passenger-box {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.passenger-box h3 {
+    margin-bottom: 15px;
+    color: #0077b6;
+}
+
+.passenger-box label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.passenger-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
 /* Responsive Design using media queries*/
 
 @media (max-width: 900px){

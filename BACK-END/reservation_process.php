@@ -82,16 +82,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $reservation_id = $pdo->lastInsertId();
 
+    $passenger_fullnames = $_POST["passenger_fullname"];
+    $passenger_birth_dates = $_POST["passenger_birth_date"];
+
     $sql_passenger = "INSERT INTO passengers (reservation_id, fullname, birth_date)
-                      VALUES (?, ?, ?)";
+                    VALUES (?, ?, ?)";
 
     $stmt_passenger = $pdo->prepare($sql_passenger);
 
-    $stmt_passenger->execute([
-        $reservation_id,
-        $fullname,
-        $birth_date
-    ]);
+    for ($i = 0; $i < count($passenger_fullnames); $i++) {
+        $stmt_passenger->execute([
+            $reservation_id,
+            $passenger_fullnames[$i],
+            $passenger_birth_dates[$i]
+        ]);
+    }
 
     header("Location: ../FRONT-END/reservation.php");
     exit;

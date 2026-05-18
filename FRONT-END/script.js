@@ -65,3 +65,39 @@ if (scrollTopBtn) {
     });
 }
 
+
+
+// Generate passenger fields based on number of persons
+console.log("Reservation JS loaded");
+
+const personsInput = document.getElementById("personnes");
+const passengersContainer = document.getElementById("passengers-container");
+
+console.log(personsInput);
+console.log(passengersContainer);
+
+if (personsInput && passengersContainer) {
+    personsInput.addEventListener("input", function () {
+        console.log("Number changed:", personsInput.value);
+
+        passengersContainer.innerHTML = "";
+
+        const persons = Number(personsInput.value);
+
+        for (let i = 1; i <= persons; i++) {
+            passengersContainer.innerHTML += `
+                <div class="passenger-box">
+                    <h3>Passager ${i}</h3>
+
+                    <label>Nom complet du passager</label>
+                    <input type="text" name="passenger_fullname[]" placeholder="Nom complet du passager">
+
+                    <label>Date de naissance</label>
+                    <input type="date" name="passenger_birth_date[]">
+                </div>
+            `;
+        }
+    });
+}
+
+

@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user_id = $_SESSION["user_id"];
 
     $fullname = $_POST["fullname"];
+    $birth_date = $_POST["birth_date"];
     $email = $_POST["email"];
     $destination = $_POST["destination"];
     $activity = $_POST["activity"];
@@ -64,6 +65,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $persons,
         $message,
         $total_price
+    ]);
+
+    $reservation_id = $pdo->lastInsertId();
+
+    $sql_passenger = "INSERT INTO passengers (reservation_id, fullname, birth_date)
+                  VALUES (?, ?, ?)";
+
+    $stmt_passenger = $pdo->prepare($sql_passenger);
+
+    $stmt_passenger->execute([
+        $reservation_id,
+        $fullname,
+        $birth_date
     ]);
 
     header("Location: ../FRONT-END/reservation.php");

@@ -58,6 +58,9 @@ session_start();
             <label for="nom">Nom complet</label>
             <input type="text" id="nom" name="fullname" placeholder="Votre nom complet">
 
+            <label for="birth-date">Date de naissance</label>
+            <input type="date" id="birth-date" name="birth_date">
+
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Votre email">
 

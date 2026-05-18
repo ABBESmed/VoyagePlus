@@ -73,6 +73,15 @@ session_start();
                 <option value="rome">Rome</option>
             </select>
 
+            <label for="flight">Vol</label>
+            <select id="flight" name="flight_id">
+                <option value="">Choisir un vol</option>
+                <option value="1">VP101 - Marseille → Paris - 120€</option>
+                <option value="2">VP102 - Marseille → Marrakech - 220€</option>
+                <option value="3">VP103 - Marseille → Bali - 650€</option>
+                <option value="4">VP104 - Marseille → Rome - 150€</option>
+            </select>
+
             <label for="activite">Activité optionnelle</label>
             <select id="activite" name="activity">
                 <option value="">Aucune activité</option>

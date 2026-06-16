@@ -109,7 +109,7 @@ session_start();
             <input type="date" id="date-retour" name="return_date">
 
             <label for="personnes">Nombre de personnes</label>
-            <input type="number" id="personnes" name="persons" placeholder="Ex: 2" min="1">
+            <input type="number" id="personnes" name="number_of_people" placeholder="Ex: 2" min="1" required>
 
             <div id="passengers-container"></div>
 

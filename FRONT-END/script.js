@@ -1,4 +1,6 @@
-// JavaScript for the burger menu functionality
+// ===============================
+// Burger menu
+// ===============================
 const burger = document.getElementById("burger");
 const nav = document.getElementById("nav");
 const buttons = document.getElementById("buttons");
@@ -10,7 +12,9 @@ if (burger && nav && buttons) {
   });
 }
 
-// JavaScript for the password visibility toggle
+// ===============================
+// Password visibility toggle
+// ===============================
 const passwordInput = document.getElementById("password");
 const togglePassword = document.getElementById("toggle-password");
 
@@ -26,7 +30,9 @@ if (passwordInput && togglePassword) {
   });
 }
 
-// JavaScript for confirm password visibility toggle
+// ===============================
+// Confirm password visibility toggle
+// ===============================
 const confirmPasswordInput = document.getElementById("confirm-password");
 const toggleConfirmPassword = document.getElementById(
   "toggle-confirm-password",
@@ -44,7 +50,9 @@ if (confirmPasswordInput && toggleConfirmPassword) {
   });
 }
 
-// JavaScript for the scroll to top button functionality
+// ===============================
+// Scroll to top button
+// ===============================
 const scrollTopBtn = document.getElementById("scrollTopBtn");
 
 if (scrollTopBtn) {
@@ -64,30 +72,59 @@ if (scrollTopBtn) {
   });
 }
 
-// passenger fields based on number of persons
-console.log("Reservation JS loaded");
-
+// ===============================
+// Dynamic passenger fields
+// ===============================
 const personsInput = document.getElementById("personnes");
 const passengersContainer = document.getElementById("passengers-container");
 
+function generatePassengerFields() {
+  if (!personsInput || !passengersContainer) {
+    return;
+  }
+
+  passengersContainer.innerHTML = "";
+
+  const numberOfPeople = parseInt(personsInput.value);
+
+  if (isNaN(numberOfPeople) || numberOfPeople <= 1) {
+    return;
+  }
+
+  // The connected user is already included.
+  // 1 person = user only = 0 passenger fields
+  // 2 people = user + 1 passenger field
+  // 3 people = user + 2 passenger fields
+  const extraPassengers = numberOfPeople - 1;
+
+  for (let i = 1; i <= extraPassengers; i++) {
+    const passengerBox = document.createElement("div");
+    passengerBox.classList.add("passenger-box");
+
+    passengerBox.innerHTML = `
+      <h3>Passager ${i}</h3>
+
+      <label>Nom complet du passager</label>
+      <input 
+        type="text" 
+        name="passenger_fullname[]" 
+        placeholder="Nom complet du passager" 
+        required
+      >
+
+      <label>Date de naissance</label>
+      <input 
+        type="date" 
+        name="passenger_birth_date[]" 
+        required
+      >
+    `;
+
+    passengersContainer.appendChild(passengerBox);
+  }
+}
+
 if (personsInput && passengersContainer) {
-  personsInput.addEventListener("input", function () {
-    passengersContainer.innerHTML = "";
-
-    const persons = Number(personsInput.value);
-
-    for (let i = 1; i <= persons; i++) {
-      passengersContainer.innerHTML += `
-                <div class="passenger-box">
-                    <h3>Passager ${i}</h3>
-
-                    <label>Nom complet du passager</label>
-                    <input type="text" name="passenger_fullname[]" placeholder="Nom complet du passager" required>
-
-                    <label>Date de naissance</label>
-                    <input type="date" name="passenger_birth_date[]" required>
-                </div>
-            `;
-    }
-  });
+  personsInput.addEventListener("input", generatePassengerFields);
+  personsInput.addEventListener("change", generatePassengerFields);
 }

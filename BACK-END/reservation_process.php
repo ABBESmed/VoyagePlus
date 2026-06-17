@@ -17,10 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Get form data safely
     $flight_id = isset($_POST["flight_id"]) ? (int) $_POST["flight_id"] : 0;
+    $destination = $_POST["destination"] ?? "";
     $activity = $_POST["activity"] ?? "";
+    $departure_date = $_POST["departure_date"] ?? "";
     $number_of_people = isset($_POST["number_of_people"]) ? (int) $_POST["number_of_people"] : 0;
     $message = $_POST["message"] ?? "";
 
+    // Other passengers only
     $passenger_fullnames = $_POST["passenger_fullname"] ?? [];
     $passenger_birth_dates = $_POST["passenger_birth_date"] ?? [];
 
@@ -29,15 +32,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Error: please choose a flight.");
     }
 
+    if (empty($destination)) {
+        die("Error: destination is missing.");
+    }
+
+    if (empty($departure_date)) {
+        die("Error: departure date is missing.");
+    }
+
     if ($number_of_people <= 0) {
         die("Error: please choose the number of people.");
     }
 
-    if ($number_of_people !== count($passenger_fullnames)) {
+    // Because the connected user is already included
+    $extra_passengers_count = $number_of_people - 1;
+
+    if ($extra_passengers_count !== count($passenger_fullnames)) {
         die("Error: number of passengers does not match number of people.");
     }
 
-    if ($number_of_people !== count($passenger_birth_dates)) {
+    if ($extra_passengers_count !== count($passenger_birth_dates)) {
         die("Error: passenger birth dates are missing.");
     }
 
@@ -51,13 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ];
 
     // Flight prices
-    // Price is not stored in the flights table anymore.
-    // We calculate it here and store the final price in passengers.price.
     $flight_prices = [
-        1 => 120, // VP101 Marseille → Paris
-        2 => 220, // VP102 Marseille → Marrakech
-        3 => 650, // VP103 Marseille → Bali
-        4 => 150  // VP104 Marseille → Rome
+        1 => 120,
+        2 => 220,
+        3 => 650,
+        4 => 150
     ];
 
     $activity_price = $activity_prices[$activity] ?? 0;
@@ -71,29 +83,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Insert reservation
         $sql = "INSERT INTO reservations 
-                (user_id, flight_id, activity, number_of_people, message)
-                VALUES (?, ?, ?, ?, ?)";
+                (user_id, flight_id, destination, activity, departure_date, number_of_people, message)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $pdo->prepare($sql);
 
         $stmt->execute([
             $user_id,
             $flight_id,
+            $destination,
             $activity,
+            $departure_date,
             $number_of_people,
             $message
         ]);
 
         $reservation_id = $pdo->lastInsertId();
 
-        // Insert passengers
+        // Insert only other passengers
         $sql_passenger = "INSERT INTO passengers 
                           (reservation_id, fullname, birth_date, price)
                           VALUES (?, ?, ?, ?)";
 
         $stmt_passenger = $pdo->prepare($sql_passenger);
 
-        for ($i = 0; $i < $number_of_people; $i++) {
+        for ($i = 0; $i < $extra_passengers_count; $i++) {
 
             $fullname = trim($passenger_fullnames[$i]);
             $birth_date = $passenger_birth_dates[$i];
@@ -113,7 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Confirm transaction
         $pdo->commit();
 
-        header("Location: ../FRONT-END/reservation.php");
+        // Redirect to success page
+        header("Location: ../FRONT-END/reservation_success.php");
         exit;
 
     } catch (Exception $e) {
@@ -122,4 +137,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         die("Reservation error: " . $e->getMessage());
     }
+
+} else {
+    // If someone opens this file directly without POST
+    header("Location: ../FRONT-END/reservation_search.php");
+    exit;
 }
+
+?>

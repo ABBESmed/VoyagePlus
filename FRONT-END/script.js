@@ -91,10 +91,10 @@ function generatePassengerFields() {
     return;
   }
 
-  // The connected user is already included.
-  // 1 person = user only = 0 passenger fields
-  // 2 people = user + 1 passenger field
-  // 3 people = user + 2 passenger fields
+  // The connected user is already included as passenger 1.
+  // 1 person = connected user only = 0 extra passenger fields
+  // 2 people = connected user + 1 extra passenger field
+  // 3 people = connected user + 2 extra passenger fields
   const extraPassengers = numberOfPeople - 1;
 
   for (let i = 1; i <= extraPassengers; i++) {
@@ -102,7 +102,7 @@ function generatePassengerFields() {
     passengerBox.classList.add("passenger-box");
 
     passengerBox.innerHTML = `
-      <h3>Passager ${i}</h3>
+      <h3>Passager supplémentaire ${i}</h3>
 
       <label>Nom complet du passager</label>
       <input 

@@ -9,7 +9,6 @@ if (!isset($_SESSION["user_id"])) {
 
 if (
     !isset($_GET["flight_id"]) ||
-    !isset($_GET["destination"]) ||
     !isset($_GET["activity"]) ||
     !isset($_GET["departure_date"])
 ) {
@@ -18,7 +17,6 @@ if (
 }
 
 $flight_id = (int) $_GET["flight_id"];
-$destination = $_GET["destination"];
 $activity = $_GET["activity"];
 $departure_date = $_GET["departure_date"];
 
@@ -32,7 +30,38 @@ $flight_prices = [
 
 $flight_price = $flight_prices[$flight_id] ?? 0;
 
-$sql = "SELECT * FROM flights WHERE id = ?";
+if ($flight_price <= 0) {
+    header("Location: reservation_search.php");
+    exit;
+}
+
+// Get selected flight + airport names + destination city
+$sql = "
+    SELECT
+        f.id,
+        f.flight_number,
+        f.departure_time,
+        f.arrival_time,
+
+        dep.nom AS departure_airport_name,
+        dep.IATA AS departure_airport_iata,
+        dep.ville AS departure_city,
+
+        arr.nom AS arrival_airport_name,
+        arr.IATA AS arrival_airport_iata,
+        arr.ville AS destination
+
+    FROM flights f
+
+    INNER JOIN airport dep
+        ON f.departure_airport = dep.id
+
+    INNER JOIN airport arr
+        ON f.arrival_airport = arr.id
+
+    WHERE f.id = ?
+";
+
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$flight_id]);
 $flight = $stmt->fetch();
@@ -41,6 +70,8 @@ if (!$flight) {
     header("Location: reservation_search.php");
     exit;
 }
+
+$destination = $flight["destination"];
 
 // Show only time, not full database date
 $departure_time = date("H:i", strtotime($flight["departure_time"]));
@@ -101,7 +132,12 @@ $arrival_time = date("H:i", strtotime($flight["arrival_time"]));
             <h3>Vol sélectionné</h3>
 
             <p><strong>Destination :</strong> <?php echo htmlspecialchars($destination); ?></p>
-            <p><strong>Activité :</strong> <?php echo $activity ? htmlspecialchars($activity) : "Aucune activité"; ?></p>
+
+            <p>
+                <strong>Activité :</strong>
+                <?php echo $activity ? htmlspecialchars($activity) : "Aucune activité"; ?>
+            </p>
+
             <p><strong>Date de départ :</strong> <?php echo htmlspecialchars($departure_date); ?></p>
 
             <p><strong>Vol :</strong> <?php echo htmlspecialchars($flight["flight_number"]); ?></p>
@@ -109,8 +145,14 @@ $arrival_time = date("H:i", strtotime($flight["arrival_time"]));
             <p>
                 <strong>Trajet :</strong>
                 <?php echo htmlspecialchars($flight["departure_city"]); ?>
+                -
+                <?php echo htmlspecialchars($flight["departure_airport_name"]); ?>
+                (<?php echo htmlspecialchars($flight["departure_airport_iata"]); ?>)
                 →
-                <?php echo htmlspecialchars($flight["arrival_city"]); ?>
+                <?php echo htmlspecialchars($destination); ?>
+                -
+                <?php echo htmlspecialchars($flight["arrival_airport_name"]); ?>
+                (<?php echo htmlspecialchars($flight["arrival_airport_iata"]); ?>)
             </p>
 
             <p><strong>Heure de départ :</strong> <?php echo $departure_time; ?></p>
@@ -149,17 +191,23 @@ $arrival_time = date("H:i", strtotime($flight["arrival_time"]));
                 readonly
             >
 
+            <p>
+                <strong>Important :</strong>
+                Vous êtes automatiquement ajouté comme passager numéro 1.
+            </p>
+
             <label for="personnes">Nombre de personnes</label>
             <input 
                 type="number" 
                 id="personnes" 
                 name="number_of_people" 
-                placeholder="Ex: 2" 
+                placeholder="Ex: 3" 
                 min="1" 
+                max="4"
                 required
             >
 
-            <!-- Ici JS ajoute les autres passagers -->
+            <!-- Ici JS ajoute seulement les autres passagers -->
             <div id="passengers-container"></div>
 
             <label for="message">Message</label>

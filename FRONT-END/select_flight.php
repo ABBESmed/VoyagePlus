@@ -8,14 +8,17 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 // Get search data safely
-$destination = $_GET["destination"] ?? "";
 $activity = $_GET["activity"] ?? "";
 $departure_date = $_GET["departure_date"] ?? "";
-$departure_city = $_GET["departure_city"] ?? "";
-$arrival_city = $_GET["arrival_city"] ?? "";
+$departure_airport = $_GET["departure_airport"] ?? "";
+$arrival_airport = $_GET["arrival_airport"] ?? "";
 
 // If something is missing, go back to search page
-if (empty($destination) || empty($departure_date) || empty($departure_city) || empty($arrival_city)) {
+if (
+    empty($departure_date) ||
+    empty($departure_airport) ||
+    empty($arrival_airport)
+) {
     header("Location: reservation_search.php");
     exit;
 }
@@ -28,13 +31,36 @@ $flight_prices = [
     4 => 150
 ];
 
-// Get matching flights
-$sql = "SELECT * FROM flights 
-        WHERE departure_city = ? 
-        AND arrival_city = ?";
+// Get matching flights + airport names + destination city
+$sql = "
+    SELECT
+        f.id,
+        f.flight_number,
+        f.departure_time,
+        f.arrival_time,
+
+        dep.nom AS departure_airport_name,
+        dep.IATA AS departure_airport_iata,
+        dep.ville AS departure_city,
+
+        arr.nom AS arrival_airport_name,
+        arr.IATA AS arrival_airport_iata,
+        arr.ville AS destination
+
+    FROM flights f
+
+    INNER JOIN airport dep
+        ON f.departure_airport = dep.id
+
+    INNER JOIN airport arr
+        ON f.arrival_airport = arr.id
+
+    WHERE f.departure_airport = ?
+    AND f.arrival_airport = ?
+";
 
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$departure_city, $arrival_city]);
+$stmt->execute([$departure_airport, $arrival_airport]);
 
 $flights = $stmt->fetchAll();
 ?>
@@ -53,43 +79,71 @@ $flights = $stmt->fetchAll();
 
     <?php if (count($flights) > 0): ?>
 
+        <div class="search-summary">
+            <p><strong>Destination :</strong> <?php echo htmlspecialchars($flights[0]["destination"]); ?></p>
+            <p><strong>Date de départ :</strong> <?php echo htmlspecialchars($departure_date); ?></p>
+
+            <p>
+                <strong>Aéroport de départ :</strong>
+                <?php echo htmlspecialchars($flights[0]["departure_city"]); ?> -
+                <?php echo htmlspecialchars($flights[0]["departure_airport_name"]); ?>
+                (<?php echo htmlspecialchars($flights[0]["departure_airport_iata"]); ?>)
+            </p>
+
+            <p>
+                <strong>Aéroport d'arrivée :</strong>
+                <?php echo htmlspecialchars($flights[0]["destination"]); ?> -
+                <?php echo htmlspecialchars($flights[0]["arrival_airport_name"]); ?>
+                (<?php echo htmlspecialchars($flights[0]["arrival_airport_iata"]); ?>)
+            </p>
+        </div>
+
         <?php foreach ($flights as $flight): ?>
 
             <?php
             $departure_time = date("H:i", strtotime($flight["departure_time"]));
             $arrival_time = date("H:i", strtotime($flight["arrival_time"]));
+            $price = $flight_prices[$flight["id"]] ?? 0;
             ?>
 
             <div class="flight-card">
                 <h3><?php echo htmlspecialchars($flight["flight_number"]); ?></h3>
 
                 <p>
-                    <?php echo htmlspecialchars($flight["departure_city"]); ?> 
+                    <?php echo htmlspecialchars($flight["departure_city"]); ?>
+                    (<?php echo htmlspecialchars($flight["departure_airport_iata"]); ?>)
                     →
-                    <?php echo htmlspecialchars($flight["arrival_city"]); ?>
+                    <?php echo htmlspecialchars($flight["destination"]); ?>
+                    (<?php echo htmlspecialchars($flight["arrival_airport_iata"]); ?>)
                 </p>
 
-                <p>Départ : <?php echo $departure_time; ?></p>
-                <p>Arrivée : <?php echo $arrival_time; ?></p>
-                <p>Prix : <?php echo $flight_prices[$flight["id"]] ?? 0; ?> €</p>
+                <p><strong>Départ :</strong> <?php echo $departure_time; ?></p>
+                <p><strong>Arrivée :</strong> <?php echo $arrival_time; ?></p>
+                <p><strong>Prix :</strong> <?php echo $price; ?> €</p>
 
                 <br>
 
                 <a 
                     class="btn-register" 
-                    href="reservation.php?flight_id=<?php echo urlencode($flight["id"]); ?>&destination=<?php echo urlencode($destination); ?>&activity=<?php echo urlencode($activity); ?>&departure_date=<?php echo urlencode($departure_date); ?>"
+                    href="reservation.php?flight_id=<?php echo urlencode($flight["id"]); ?>&activity=<?php echo urlencode($activity); ?>&departure_date=<?php echo urlencode($departure_date); ?>"
                 >
                     Choisir ce vol
                 </a>
             </div>
+
         <?php endforeach; ?>
 
     <?php else: ?>
+
+        <div class="search-summary">
+            <p><strong>Date de départ :</strong> <?php echo htmlspecialchars($departure_date); ?></p>
+        </div>
 
         <p>Aucun vol trouvé pour cette recherche.</p>
         <a href="reservation_search.php">Retour</a>
 
     <?php endif; ?>
+
 </section>
 
 </body>
